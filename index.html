@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetching Api</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Smooch&display=swap" rel="stylesheet">
+    <style>
+         body {
+
+            background-image: url("cameron-venti-35uZM_4wjYg-unsplash.jpg");
+            background-size: cover;
+            color: hsl(48, 100%, 93%);
+            
+         }
+
+         .style {
+             text-align: center;
+
+         }
+         h1 {
+            font-family: 'Mochiy Pop P One', sans-serif;
+            font-family: 'Smooch', cursive;
+            font-size: 70px;
+            color: black;
+            webkit-animation: glow 1s ease-in-out infinite alternate;
+            -moz-animation: glow 1s ease-in-out infinite alternate;
+            animation: glow 1s ease-in-out infinite alternate;
+            }
+
+           @-webkit-keyframes glow {
+           from {
+           text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+           }
+           to {
+           text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+           }
+         }
+         .pick_character {
+             background-color: #000000e7;
+             color: rgb(231, 231, 231);
+             border-radius: 20px;
+             text-align: center;
+             padding: 10px 20px;
+             border: none;
+             display: inline-block;
+             transition: all 0.3s;
+         }
+         .pick_character:hover {
+             box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 
+                         0 17px 50px 0 rgba(0,0,0,0.19);
+                         background-color: #fff;
+                         color: black;
+         }
+         .style div {
+             text-shadow: 1px 1px 3px red;
+             border: 0px;
+             color: black;
+         }
+
+
+    </style>
+</head>
+<body>
+    <div class="style">
+        <h1> Star wars characters </h1>
+    <strong>Name:</strong>
+    <div id="name" class="loading"></div>
+
+    <strong>Starships:</strong>
+    <div id ="starships" class="loading"></div>
+
+    <strong>Mass:</strong>
+    <div id ="mass" class="loading"></div>
+
+    <strong>Height:</strong>
+    <div id ="height" class="loading"></div>
+
+    <strong>Species:</strong>
+    <div id ="species" class="loading"></div>
+
+    <strong>Birth year</strong>
+    <div id ="birth_year" class="loading"></div>
+
+    <strong>Hair colour:</strong>
+    <div id ="hair_color" class="loading"></div>
+
+    <strong>Eye colour:</strong>
+    <div id ="eye_color" class="loading"></div>
+
+    <strong>Gender:</strong>
+    <div id ="gender" class="loading"></div>
+
+    
+    <button type="button" class="pick_character"> Pick character</button>
+    
+    </div>
+    
+
+    <script>
+        
+        const name = document.getElementById("name");
+        const image = document.getElementById("starship");
+        const mass = document.getElementById("mass");
+        const height = document.getElementById("height");
+        const species = document.getElementById("species");
+        const hair_color = document.getElementById("hair_color");
+        const birth_year = document.getElementById("birth_year");
+        const eye_colour = document.getElementById("eye_color");
+        const gender = document.getElementById("gender");
+        const pick_character = document.querySelector(".pick_character");
+        const loading = document.querySelectorAll(".loading")
+    
+
+        pick_character.addEventListener("click",  (e) => {
+            e.preventDefault()
+               name.innerHTML = '<em> loading.... </em>';
+               mass.innerHTML = '<em> loading.... </em>';
+               height.innerHTML = '<em> loading.... </em>';
+               species.innerHTML = '<em> loading.... </em>';
+               hair_color.innerHTML = '<em> loading.... </em>';
+               birth_year.innerHTML = '<em> loading.... </em>';
+               eye_colour.innerHTML = '<em> loading.... </em>';
+               gender.innerHTML ='<em> loading.... </em>';
+               starships.innerHTML = '<em> loading.... </em>';
+              
+            const randomNumber = Math.ceil(Math.random() * 80)
+            fetch(`https://swapi.py4e.com/api/people/${randomNumber}/`)
+                 .then(x => x.json())
+                 .then(character => {
+               name.innerHTML = character['name'];
+               mass.innerHTML = character['mass'];
+               height.innerHTML = character['height'];
+               species.innerHTML = character['species'];
+               hair_color.innerHTML = character['hair_color'];
+               birth_year.innerHTML = character['birth_year'];
+               eye_colour.innerHTML = character['eye_color'];
+               gender.innerHTML = character['gender'];
+
+            const jet = character['homeworld'];
+
+            fetch(jet)
+                .then(response => response.json())
+                .then(ship => {
+                    console.log(ship)
+                    starships.innerHTML = ship['name'];
+                     })   
+           })
+               })
+        
+            
+          
+
+           
+
+    </script>
+</body>
+</html>
